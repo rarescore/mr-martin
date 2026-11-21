@@ -1,0 +1,85 @@
+#app-shell {
+  min-height: 100%;
+  transition:
+    opacity 640ms cubic-bezier(0.83, 0, 0.17, 1),
+    transform 640ms cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+html.wiping #app-shell {
+  opacity: 0;
+  transform: scale(0.96);
+  pointer-events: none;
+}
+
+.page-wipe {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.page-wipe.on {
+  pointer-events: auto;
+}
+
+.page-wipe .sq {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100vmax;
+  height: 100vmax;
+  background: #1d244e;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 640ms cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+.page-wipe.on .sq {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.page-wipe.leave .sq {
+  transform: translate(-50%, -50%) scale(1.5);
+  opacity: 0;
+  transition:
+    transform 700ms cubic-bezier(0.83, 0, 0.17, 1),
+    opacity 460ms ease 40ms;
+}
+
+.page-wipe .mark {
+  position: relative;
+  z-index: 1;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #b4232a;
+  color: #FFF7E7;
+  font-family: var(--font-display);
+  font-size: 32px;
+  opacity: 0;
+  transform: scale(0.8);
+  transition:
+    opacity 280ms ease 180ms,
+    transform 420ms cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+.page-wipe.on .mark {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.page-wipe.leave .mark {
+  opacity: 0;
+  transition-delay: 0ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #app-shell,
+  .page-wipe .sq,
+  .page-wipe .mark {
+    transition: none;
+  }
+}
